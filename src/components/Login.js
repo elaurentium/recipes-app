@@ -25,6 +25,10 @@ export default function Login() {
     setPassword(value);
   };
 
+  const handleClick = () => {
+    localStorage.setItem('user', JSON.stringify({ email }));
+  };
+
   return (
     <div>
       <h1 className="h1">Login</h1>
@@ -51,6 +55,7 @@ export default function Login() {
           name="login-submit-btn"
           id="login-submit-btn"
           disabled={ button }
+          onClick={ handleClick }
         >
           Enter
         </button>
