@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { Context } from '../Context/ApiContext';
+import { ContextApi } from '../Context/ApiContext';
 
 function SearchBar() {
   const [input, setInput] = useState('');
@@ -8,7 +8,7 @@ function SearchBar() {
   const location = useLocation();
   const history = useHistory();
 
-  const { foo } = useContext(Context);
+  const { foo } = useContext(ContextApi);
 
   useState(() => {
     if (foo.data.length === 1) {
@@ -34,7 +34,7 @@ function SearchBar() {
   };
 
   const btnClick = () => {
-    if (input.length > 1) {
+    if (input.length > 1 && radio === 'first-letter') {
       global.alert('Your search must have only 1 (one) character');
     }
 

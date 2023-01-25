@@ -2,7 +2,7 @@ import React, { createContext, useCallback, useState } from 'react';
 import P from 'prop-types';
 import { drinkFetch, mealFetch } from '../services';
 
-export const Context = createContext();
+export const ContextApi = createContext();
 
 function ApiContext({ children }) {
   const [data, setData] = useState([]);
@@ -55,9 +55,9 @@ function ApiContext({ children }) {
   const foo = useMemo(() => ({ result, data, ApiFetch }), [ApiFetch, data, result]);
 
   return (
-    <Context.Provider value={ foo }>
+    <ContextApi.Provider value={ foo }>
       {children}
-    </Context.Provider>
+    </ContextApi.Provider>
   );
 }
 
