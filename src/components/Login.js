@@ -35,7 +35,7 @@ export default function Login() {
 
   return (
     <div>
-      <h1 className="h1">Login</h1>
+      <h1 className="h1">LOGIN</h1>
       <div className="login">
         <input
           data-testid="email-input"
