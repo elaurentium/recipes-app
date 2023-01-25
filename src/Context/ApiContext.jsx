@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useState } from 'react';
+import React, { createContext, useCallback, useMemo, useState } from 'react';
 import P from 'prop-types';
 import { drinkFetch, mealFetch } from '../services';
 
@@ -25,31 +25,33 @@ function ApiContext({ children }) {
     }
     const response = await mealFetch(endPoint);
     if (response.length < 1) setResult(true);
-    return response;
+    setData(response);
   };
 
   const drink = async (tipo, str) => {
     let endPoint = '';
     switch (tipo) {
     case 'ingredient':
-      endPoint = `www.thecocktaildb.com/api/json/v1/1/search.php?i=${str}`;
+      endPoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?i=${str}`;
       break;
     case 'name':
-      endPoint = `www.thecocktaildb.com/api/json/v1/1/search.php?s=${str}`;
+      endPoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${str}`;
       break;
     case 'first-letter':
-      endPoint = `www.thecocktaildb.com/api/json/v1/1/search.php?f=${str}`;
+      endPoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${str}`;
       break;
     default:
       return '';
     }
     const response = await drinkFetch(endPoint);
-    if (response.length < 1) setResult(true);
-    return response;
+    const array = response.drinks || response.ingredients;
+    if (array.length < 1) setResult(true);
+    setData(array);
   };
 
   const ApiFetch = useCallback(async (page, tipo, str) => {
-    setData(page === '/meals' ? await meal(tipo, str) : await drink(tipo, str));
+    if (page === '/meals') await meal(tipo, str);
+    else await drink(tipo, str);
   }, []);
 
   const foo = useMemo(() => ({ result, data, ApiFetch }), [ApiFetch, data, result]);

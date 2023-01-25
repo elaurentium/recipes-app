@@ -8,22 +8,22 @@ function SearchBar() {
   const location = useLocation();
   const history = useHistory();
 
-  const { foo } = useContext(ContextApi);
+  const { data, result, ApiFetch } = useContext(ContextApi);
 
   useState(() => {
-    if (foo.data.length === 1) {
-      const id = foo.data[0].idMeals || foo.data[0].idDinks;
+    if (data.length === 1) {
+      const id = data[0].idMeals || data[0].idDinks;
       history.push(`${location.pathname}/${id}`);
     }
-  }, [foo.data]);
+  }, [data]);
 
   useEffect(() => {
-    if (foo.result) {
+    if (result) {
       global.alert(
         'Sorry, we haven\'t found any recipes for these filters.',
       );
     }
-  }, [foo.result]);
+  }, [result]);
 
   const handleChange = ({ target }) => {
     setInput(target.value);
@@ -39,7 +39,7 @@ function SearchBar() {
     }
 
     if (input.length === 1) {
-      foo.ApiFetch(location.pathname, radio, input);
+      ApiFetch(location.pathname, radio, input);
     }
   };
 
@@ -86,7 +86,7 @@ function SearchBar() {
             id="first-letter"
             data-testid="first-letter-search-radio"
             value="first-letter"
-            checked={ radio === 'first-lette' }
+            checked={ radio === 'first-letter' }
             onChange={ radioState }
           />
         </label>
