@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 export default function Login() {
   const [button, setButton] = useState(true);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+
+  const history = useHistory();
 
   useEffect(() => {
     const emailRegex = (
@@ -27,6 +30,7 @@ export default function Login() {
 
   const handleClick = () => {
     localStorage.setItem('user', JSON.stringify({ email }));
+    history.push('/meals');
   };
 
   return (
