@@ -12,7 +12,7 @@ function SearchBar() {
 
   useEffect(() => {
     if (data.length === 1) {
-      const id = data[0].idMeals || data[0].idDrink;
+      const id = data[0].idMeal || data[0].idDrink;
       history.push(`${location.pathname}/${id}`);
     }
   }, [data, history, location.pathname]);

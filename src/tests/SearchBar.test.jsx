@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import ApiContext from '../Context/ApiContext';
 import SearchBar from '../components/SearchBar';
 import { renderWithRouter } from '../helpers/renderWithRoutes';
-import { fetch } from './mockConstantes';
+import { drinks1, fetch, meals1 } from './mockConstantes';
 
 const search = 'search-input';
 const ingredient = 'ingredient-search-radio';
@@ -58,7 +58,7 @@ describe('<SearchBar />', () => {
     expect(global.alert).toHaveBeenCalled();
     expect(global.alert).toHaveBeenCalledTimes(1);
   });
-  it('o restorno da fetch com retorno inválido', async () => {
+  it('o restorno da fetch com retorno invalid', async () => {
     global.fetch = jest.fn(() => Promise.resolve({
       json: () => Promise.resolve(fetch),
     }));
@@ -82,7 +82,52 @@ describe('<SearchBar />', () => {
       expect(global.alert).toHaveBeenCalledTimes(1);
     });
   });
-  it('4', () => {
+  it('o restorno da fetch com retorno de length 1 em /meals', async () => {
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(meals1),
+    }));
 
+    jest.spyOn(global, 'alert');
+    global.alert.mockImplementation(() => {});
+
+    const { history } = renderWithRouter(
+      <ApiContext><SearchBar /></ApiContext>,
+      '/meals',
+    );
+
+    const text = screen.getByTestId(search);
+    const btn = screen.getByTestId(button);
+
+    userEvent.type(text, 'comida');
+    userEvent.click(btn);
+
+    await waitFor(() => {
+      const { pathname } = history.location;
+      expect(pathname).not.toBe('/meals');
+    });
+  });
+  it('o restorno da fetch com retorno de length 1 em /drinks', async () => {
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(drinks1),
+    }));
+
+    jest.spyOn(global, 'alert');
+    global.alert.mockImplementation(() => {});
+
+    const { history } = renderWithRouter(
+      <ApiContext><SearchBar /></ApiContext>,
+      '/drinks',
+    );
+
+    const text = screen.getByTestId(search);
+    const btn = screen.getByTestId(button);
+
+    userEvent.type(text, 'bebida');
+    userEvent.click(btn);
+
+    await waitFor(() => {
+      const { pathname } = history.location;
+      expect(pathname).not.toBe('/drinks');
+    });
   });
 });
