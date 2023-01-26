@@ -12,7 +12,7 @@ function ApiContext({ children }) {
     let endPoint = '';
     switch (tipo) {
     case 'ingredient':
-      endPoint = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${str}`;
+      endPoint = `https://www.themealdb.com/api/json/v1/1/search.php?i=${str}`;
       break;
     case 'name':
       endPoint = `https://www.themealdb.com/api/json/v1/1/search.php?s=${str}`;
@@ -24,15 +24,17 @@ function ApiContext({ children }) {
       return '';
     }
     const response = await mealFetch(endPoint);
-    if (response.length < 1) setResult(true);
-    setData(response);
+    if (!response) {
+      setResult(true);
+      setData([]);
+    } else setData(response);
   };
 
   const drink = async (tipo, str) => {
     let endPoint = '';
     switch (tipo) {
     case 'ingredient':
-      endPoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?i=${str}`;
+      endPoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${str}`;
       break;
     case 'name':
       endPoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${str}`;
@@ -44,14 +46,15 @@ function ApiContext({ children }) {
       return '';
     }
     const response = await drinkFetch(endPoint);
-    const array = response.drinks || response.ingredients;
-    if (array.length < 1) setResult(true);
-    setData(array);
+    if (!response) {
+      setResult(true);
+      setData([]);
+    } else setData(response);
   };
 
   const ApiFetch = useCallback(async (page, tipo, str) => {
     if (page === '/meals') await meal(tipo, str);
-    else await drink(tipo, str);
+    if (page === '/drinks') await drink(tipo, str);
   }, []);
 
   const foo = useMemo(() => ({ result, data, ApiFetch }), [ApiFetch, data, result]);

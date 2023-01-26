@@ -10,12 +10,12 @@ function SearchBar() {
 
   const { data, result, ApiFetch } = useContext(ContextApi);
 
-  useState(() => {
+  useEffect(() => {
     if (data.length === 1) {
-      const id = data[0].idMeals || data[0].idDinks;
+      const id = data[0].idMeals || data[0].idDrink;
       history.push(`${location.pathname}/${id}`);
     }
-  }, [data]);
+  }, [data, history, location.pathname]);
 
   useEffect(() => {
     if (result) {
@@ -36,9 +36,7 @@ function SearchBar() {
   const btnClick = () => {
     if (input.length > 1 && radio === 'first-letter') {
       global.alert('Your search must have only 1 (one) character');
-    }
-
-    if (input.length === 1) {
+    } else if (input.length >= 1 && radio) {
       ApiFetch(location.pathname, radio, input);
     }
   };

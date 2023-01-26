@@ -7,7 +7,8 @@ import Test from './tests/Test';
 function App() {
   return (
     <Switch>
-      <Route path="/meals" component={ Test } />
+      <Route path="/meals" component={ Test } exact />
+      <Route path="/drinks" component={ Test } exact />
     </Switch>
   );
 }
