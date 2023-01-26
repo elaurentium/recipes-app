@@ -4,12 +4,15 @@ import { ContextApi } from '../Context/ApiContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import RecipeCard from '../components/RecipeCard';
-import { initalFetch } from '../services';
+import { categoryFetch, initalFetch } from '../services';
+import ButtonCategory from '../components/ButtonCategory';
 
 const DOZE = 12;
 
 export default function Recipes() {
   const [recipes, setRecipes] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const { data } = useContext(ContextApi);
   const location = useLocation();
@@ -19,16 +22,21 @@ export default function Recipes() {
     if (data?.length > 1) setRecipes(data.slice(0, DOZE));
   }, [data]);
 
-  const recipeFetch = useCallback(async () => {
-    const array = await initalFetch(pathname);
-    setRecipes(array);
+  const loadFetch = useCallback(async () => {
+    setRecipes(await initalFetch(pathname));
+    setCategory(await categoryFetch(pathname));
+    setLoading(false);
   }, [pathname]);
 
   useEffect(() => {
-    recipeFetch();
-  }, [recipeFetch]);
+    loadFetch();
+  }, [loadFetch]);
 
-  console.log(recipes);
+  if (loading) {
+    return (
+      <h1>Loading...</h1>
+    );
+  }
 
   return (
     <div>
@@ -36,6 +44,10 @@ export default function Recipes() {
         {pathname === '/meals' ? 'Meals' : 'Drinks'}
       </h1>
       <Header />
+      {category.length > 0 && category.map(({ strCategory }) => (<ButtonCategory
+        key={ strCategory }
+        name={ strCategory }
+      />))}
       {recipes.length > 1 && recipes
         .map((e, index) => (
           <RecipeCard
