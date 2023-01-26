@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 export default function Recipes() {
   const location = useLocation();
@@ -12,6 +13,7 @@ export default function Recipes() {
         {pathname === '/meals' ? 'Meals' : 'Drinks'}
       </h1>
       <Header />
+      <Footer />
     </div>
   );
 }
