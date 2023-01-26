@@ -5,7 +5,6 @@ import { createMemoryHistory } from 'history';
 
 export const renderWithRouter = (component, route = '/') => {
   const history = createMemoryHistory({ initialEntries: [route] });
-
   return {
     ...render(
       <Router history={ history }>

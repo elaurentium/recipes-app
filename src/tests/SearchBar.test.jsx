@@ -2,7 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ApiContext from '../Context/ApiContext';
 import SearchBar from '../components/SearchBar';
-import { renderWithRouter } from '../helpers/renderWithRoutes';
+import { renderWithRouter } from '../helpers/renderWithRouter';
 import { drinks1, fetch, meals1 } from './mockConstantes';
 
 const search = 'search-input';
