@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import React from 'react';
-import Footer from '../components/Footer';
 import { renderWithRouter } from '../helpers/renderWithRouter';
+import Footer from '../components/Footer';
 
 describe('Testa o componente Footer', () => {
   test('Testa se contém as informações corretas', () => {
