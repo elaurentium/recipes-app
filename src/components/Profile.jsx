@@ -6,8 +6,12 @@ export default function Profile() {
 
   const history = useHistory();
 
-  const handleClick = () => {
+  const handleClickDoneRecipes = () => {
     history.push('/done-recipes');
+  };
+
+  const handleClickFavoriteRecipes = () => {
+    history.push('/favorite-recipes');
   };
 
   return (
@@ -29,7 +33,7 @@ export default function Profile() {
           data-testid="profile-done-btn"
           name="rofile-done-btn"
           id="rofile-done-btn"
-          onClick={ handleClick }
+          onClick={ handleClickDoneRecipes }
         >
           Done Recipes
         </button>
@@ -38,6 +42,7 @@ export default function Profile() {
           data-testid="profile-favorite-btn"
           name="profile-favorite-btn"
           id="profile-favorite-btn"
+          onClick={ handleClickFavoriteRecipes }
         >
           Favorite Recipes
         </button>
