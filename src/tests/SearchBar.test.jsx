@@ -29,7 +29,6 @@ describe('<SearchBar />', () => {
     expect(lRadio).toBeInTheDocument();
     expect(btn).toBeInTheDocument();
   });
-
   it('a rota', () => {
     const { history } = renderWithRouter(
       <ApiContext><SearchBar /></ApiContext>,
@@ -38,7 +37,6 @@ describe('<SearchBar />', () => {
     const { pathname } = history.location;
     expect(pathname).toBe('/meals');
   });
-
   it('se o alerta é chamado passando mais de uma letra no input', () => {
     renderWithRouter(
       <ApiContext><SearchBar /></ApiContext>,
@@ -82,7 +80,7 @@ describe('<SearchBar />', () => {
       expect(global.alert).toHaveBeenCalledTimes(1);
     });
   });
-  it('o restorno da fetch com retorno de length 1 em /meals', async () => {
+  it('fetch com retorno de length 1 em /meals para ingredient', async () => {
     global.fetch = jest.fn(() => Promise.resolve({
       json: () => Promise.resolve(meals1),
     }));
@@ -106,7 +104,61 @@ describe('<SearchBar />', () => {
       expect(pathname).not.toBe('/meals');
     });
   });
-  it('o restorno da fetch com retorno de length 1 em /drinks', async () => {
+  it('fetch com retorno de length 1 em /meals para first-letter', async () => {
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(meals1),
+    }));
+
+    jest.spyOn(global, 'alert');
+    global.alert.mockImplementation(() => {});
+
+    const { history } = renderWithRouter(
+      <ApiContext><SearchBar /></ApiContext>,
+      '/meals',
+    );
+
+    const text = screen.getByTestId(search);
+    const lRadio = screen.getByTestId(letter);
+    const btn = screen.getByTestId(button);
+
+    userEvent.type(text, 'a');
+    userEvent.click(lRadio);
+    userEvent.click(btn);
+
+    await waitFor(() => {
+      const { pathname } = history.location;
+      expect(global.fetch).toHaveBeenCalled();
+      expect(global.fetch).toHaveBeenCalledTimes(1);
+      expect(pathname).not.toBe('/meals');
+    });
+  });
+  it('fetch com retorno de length 1 em /meals para name', async () => {
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(meals1),
+    }));
+
+    jest.spyOn(global, 'alert');
+    global.alert.mockImplementation(() => {});
+
+    const { history } = renderWithRouter(
+      <ApiContext><SearchBar /></ApiContext>,
+      '/meals',
+    );
+
+    const text = screen.getByTestId(search);
+    const nRadio = screen.getByTestId(name);
+    const btn = screen.getByTestId(button);
+
+    userEvent.type(text, 'comida');
+    userEvent.click(nRadio);
+    userEvent.click(btn);
+
+    await waitFor(() => {
+      const { pathname } = history.location;
+      expect(pathname).not.toBe('/meals');
+    });
+  });
+  it('fetch com retorno de length 1 em /drinks para ingredient', async () => {
     global.fetch = jest.fn(() => Promise.resolve({
       json: () => Promise.resolve(drinks1),
     }));
@@ -128,6 +180,60 @@ describe('<SearchBar />', () => {
     await waitFor(() => {
       const { pathname } = history.location;
       expect(pathname).not.toBe('/drinks');
+    });
+  });
+  it('fetch com retorno de length 1 em /drinks para name', async () => {
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(meals1),
+    }));
+
+    jest.spyOn(global, 'alert');
+    global.alert.mockImplementation(() => {});
+
+    const { history } = renderWithRouter(
+      <ApiContext><SearchBar /></ApiContext>,
+      '/drinks',
+    );
+
+    const text = screen.getByTestId(search);
+    const nRadio = screen.getByTestId(name);
+    const btn = screen.getByTestId(button);
+
+    userEvent.type(text, 'comida');
+    userEvent.click(nRadio);
+    userEvent.click(btn);
+
+    await waitFor(() => {
+      const { pathname } = history.location;
+      expect(pathname).not.toBe('/meals');
+    });
+  });
+  it('fetch com retorno de length 1 em /drinks para first-letter', async () => {
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(meals1),
+    }));
+
+    jest.spyOn(global, 'alert');
+    global.alert.mockImplementation(() => {});
+
+    const { history } = renderWithRouter(
+      <ApiContext><SearchBar /></ApiContext>,
+      '/drinks',
+    );
+
+    const text = screen.getByTestId(search);
+    const lRadio = screen.getByTestId(letter);
+    const btn = screen.getByTestId(button);
+
+    userEvent.type(text, 'a');
+    userEvent.click(lRadio);
+    userEvent.click(btn);
+
+    await waitFor(() => {
+      const { pathname } = history.location;
+      expect(global.fetch).toHaveBeenCalled();
+      expect(global.fetch).toHaveBeenCalledTimes(1);
+      expect(pathname).not.toBe('/meals');
     });
   });
 });

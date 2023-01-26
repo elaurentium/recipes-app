@@ -10,19 +10,11 @@ function ApiContext({ children }) {
 
   const meal = async (tipo, str) => {
     let endPoint = '';
-    switch (tipo) {
-    case 'ingredient':
-      endPoint = `https://www.themealdb.com/api/json/v1/1/search.php?i=${str}`;
-      break;
-    case 'name':
-      endPoint = `https://www.themealdb.com/api/json/v1/1/search.php?s=${str}`;
-      break;
-    case 'first-letter':
-      endPoint = `https://www.themealdb.com/api/json/v1/1/search.php?f=${str}`;
-      break;
-    default:
-      return '';
-    }
+
+    if (tipo === 'ingredient') endPoint = `https://www.themealdb.com/api/json/v1/1/search.php?i=${str}`;
+    if (tipo === 'name') endPoint = `https://www.themealdb.com/api/json/v1/1/search.php?s=${str}`;
+    if (tipo === 'first-letter') endPoint = `https://www.themealdb.com/api/json/v1/1/search.php?f=${str}`;
+
     const response = await mealFetch(endPoint);
     if (!response) {
       setResult(true);
@@ -32,19 +24,11 @@ function ApiContext({ children }) {
 
   const drink = async (tipo, str) => {
     let endPoint = '';
-    switch (tipo) {
-    case 'ingredient':
-      endPoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${str}`;
-      break;
-    case 'name':
-      endPoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${str}`;
-      break;
-    case 'first-letter':
-      endPoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${str}`;
-      break;
-    default:
-      return '';
-    }
+
+    if (tipo === 'ingredient') endPoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${str}`;
+    if (tipo === 'name') endPoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${str}`;
+    if (tipo === 'first-letter') endPoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${str}`;
+
     const response = await drinkFetch(endPoint);
     if (!response) {
       setResult(true);
