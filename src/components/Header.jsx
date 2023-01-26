@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 function Header() {
   const [isShow, setIsShow] = useState(false);
@@ -46,9 +47,7 @@ function Header() {
       }
       {
         isShow && (
-          <div>
-            <input type="text" data-testid="search-input" />
-          </div>
+          <SearchBar />
         )
       }
     </div>
