@@ -1,22 +1,43 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import React from 'react';
+import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from '../helpers/renderWithRouter';
 import Header from '../components/Header';
 
+const profile = 'profile-top-btn';
+const searchBtn = 'search-top-btn';
+const searchInp = 'search-input';
+
 describe('Testa componente Header', () => {
   it('Verifica se todos os componentes são renderizados no /meals', () => {
-    renderWithRouter(<Header />, 'meals');
+    renderWithRouter(<Header />, '/meals');
 
-    const title = screen.getByTestId('page-title');
-    const profilePic = screen.getByTestId('profile-top-btn');
-    const searchInputButton = screen.getByTestId('search-top-btn');
-    const searchInput = screen.getAllByTestId('search-input');
+    const profilePic = screen.getByTestId(profile);
+    const searchInputButton = screen.getByTestId(searchBtn);
+    const searchInputTxt = screen.queryByTestId(searchInp);
 
-    expect(title).toBeInTheDocument();
     expect(profilePic).toBeInTheDocument();
+    expect(searchInputButton).toBeInTheDocument();
+    expect(searchInputTxt).not.toBeInTheDocument();
+  });
+  it('botão profile leva para rota /profile', async () => {
+    const { history } = renderWithRouter(<Header />, '/meals');
 
+    const profilePic = screen.getByTestId(profile);
+    userEvent.click(profilePic);
+
+    await waitFor(() => {
+      const { pathname } = history.location;
+      expect(pathname).toBe('/profile');
+    });
+  });
+  it('botão de busca mostra input', () => {
+    renderWithRouter(<Header />, '/meals');
+
+    const searchInputButton = screen.getByTestId(searchBtn);
     userEvent.click(searchInputButton);
 
-    expect(searchInput).not.toBeDisabled();
+    const searchInputTxt = screen.getByTestId(searchInp);
+    expect(searchInputTxt).toBeInTheDocument();
   });
 });
