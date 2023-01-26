@@ -11,7 +11,7 @@ function ApiContext({ children }) {
   const meal = async (tipo, str) => {
     let endPoint = '';
 
-    if (tipo === 'ingredient') endPoint = `https://www.themealdb.com/api/json/v1/1/search.php?i=${str}`;
+    if (tipo === 'ingredient') endPoint = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${str}`;
     if (tipo === 'name') endPoint = `https://www.themealdb.com/api/json/v1/1/search.php?s=${str}`;
     if (tipo === 'first-letter') endPoint = `https://www.themealdb.com/api/json/v1/1/search.php?f=${str}`;
 

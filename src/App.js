@@ -6,7 +6,7 @@ import RecipeInProgress from './Pages/RecipeInProgress';
 import Profile from './Pages/Profile';
 import DoneRecipes from './Pages/DoneRecipes';
 import FavoriteRecipes from './Pages/FavoriteRecipes';
-import Login from './components/Login';
+import Login from './Pages/Login';
 
 function App() {
   return (
