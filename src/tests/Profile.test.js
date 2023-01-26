@@ -1,12 +1,12 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Profile from '../components/Profile';
+import Profile from '../Pages/Profile';
 import { renderWithRouter } from '../helpers/renderWithRouter';
 
 describe('Testes do componente Profile', () => {
   it('Verifica se o elemento de email e os botões estão renderizados', () => {
-    render(<Profile />);
+    renderWithRouter(<Profile />);
 
     const email = screen.getByTestId('profile-email');
     expect(email).toBeInTheDocument();
@@ -18,7 +18,7 @@ describe('Testes do componente Profile', () => {
     expect(logout).toBeInTheDocument();
   });
   it('Testa se os botões no componente estão habilitados', () => {
-    render(<Profile />);
+    renderWithRouter(<Profile />);
 
     const doneRecipesButton = screen.getByRole('button', {
       name: /done recipes/i,
