@@ -4,7 +4,7 @@ import { ContextApi } from '../Context/ApiContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import RecipeCard from '../components/RecipeCard';
-import { categoryFetch, initalFetch } from '../services';
+import { categoryFetch, categoryFilterFetch, initalFetch } from '../services';
 import ButtonCategory from '../components/ButtonCategory';
 
 const DOZE = 12;
@@ -32,6 +32,14 @@ export default function Recipes() {
     loadFetch();
   }, [loadFetch]);
 
+  const categoryFilter = async (id) => {
+    setRecipes(await categoryFilterFetch(id, pathname));
+  };
+
+  const clearFilter = async () => {
+    setRecipes(await initalFetch(pathname));
+  };
+
   if (loading) {
     return (
       <h1>Loading...</h1>
@@ -47,8 +55,10 @@ export default function Recipes() {
       {category.length > 0 && category.map(({ strCategory }) => (<ButtonCategory
         key={ strCategory }
         name={ strCategory }
+        func={ categoryFilter }
       />))}
-      {recipes.length > 1 && recipes
+      <button data-testid="All-category-filter" onClick={ clearFilter }>All</button>
+      {recipes.length > 0 && recipes
         .map((e, index) => (
           <RecipeCard
             key={ (e.strMeal || e.strDrink

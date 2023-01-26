@@ -41,3 +41,15 @@ export const categoryFetch = async (pathname) => {
   const array = json.meals || json.drinks;
   return array.slice(0, CINCO);
 };
+
+export const categoryFilterFetch = async (id, pathname) => {
+  const DOZE = 12;
+  const epMeal = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${id}`;
+  const epDrink = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${id}`;
+  const endPonit = pathname === '/meals' ? epMeal : epDrink;
+  const response = await fetch(endPonit);
+  const json = await response.json();
+  const array = json.meals || json.drinks;
+  console.log(array);
+  return array.slice(0, DOZE);
+};
