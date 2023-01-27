@@ -1,8 +1,11 @@
 import React from 'react';
+import InProgress from '../components/InProgress';
 
 function RecipeInProgress() {
   return (
-    <div>RecipeInProgress</div>
+    <div>
+      <InProgress />
+    </div>
   );
 }
 
