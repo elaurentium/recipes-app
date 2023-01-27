@@ -13,6 +13,7 @@ export default function Recipes() {
   const [recipes, setRecipes] = useState([]);
   const [category, setCategory] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState({});
 
   const { data } = useContext(ContextApi);
   const location = useLocation();
@@ -32,12 +33,18 @@ export default function Recipes() {
     loadFetch();
   }, [loadFetch]);
 
-  const categoryFilter = async (id) => {
-    setRecipes(await categoryFilterFetch(id, pathname));
-  };
-
   const clearFilter = async () => {
     setRecipes(await initalFetch(pathname));
+  };
+
+  const categoryFilter = async (id) => {
+    if (filter[id]) {
+      setFilter({ ...filter, [id]: false });
+      clearFilter();
+    } else {
+      setFilter({ ...filter, [id]: true });
+      setRecipes(await categoryFilterFetch(id, pathname));
+    }
   };
 
   if (loading) {
@@ -67,6 +74,8 @@ export default function Recipes() {
             ) }
             thumb={ (e.strMealThumb || e.strDrinkThumb) }
             index={ index }
+            id={ (e.idMeal || e.idDrink) }
+            path={ pathname }
           />))}
       <Footer />
     </div>

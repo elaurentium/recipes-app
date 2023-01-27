@@ -50,6 +50,5 @@ export const categoryFilterFetch = async (id, pathname) => {
   const response = await fetch(endPonit);
   const json = await response.json();
   const array = json.meals || json.drinks;
-  console.log(array);
   return array.slice(0, DOZE);
 };

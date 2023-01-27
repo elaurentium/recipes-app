@@ -6,6 +6,7 @@ function ButtonCategory({ name, func }) {
     <button
       data-testid={ `${name}-category-filter` }
       onClick={ () => func(name) }
+      className="false"
     >
       {name}
     </button>
