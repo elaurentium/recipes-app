@@ -1,14 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ContextApi } from '../Context/ApiContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import RecipeCard from '../components/RecipeCard';
+import { categoryFetch, categoryFilterFetch, initalFetch } from '../services';
+import ButtonCategory from '../components/ButtonCategory';
 
 const DOZE = 12;
 
 export default function Recipes() {
   const [recipes, setRecipes] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState({});
 
   const { data } = useContext(ContextApi);
   const location = useLocation();
@@ -18,7 +23,35 @@ export default function Recipes() {
     if (data?.length > 1) setRecipes(data.slice(0, DOZE));
   }, [data]);
 
-  console.log(recipes);
+  const loadFetch = useCallback(async () => {
+    setRecipes(await initalFetch(pathname));
+    setCategory(await categoryFetch(pathname));
+    setLoading(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    loadFetch();
+  }, [loadFetch]);
+
+  const clearFilter = async () => {
+    setRecipes(await initalFetch(pathname));
+  };
+
+  const categoryFilter = async (id) => {
+    if (filter[id]) {
+      setFilter({ ...filter, [id]: false });
+      clearFilter();
+    } else {
+      setFilter({ ...filter, [id]: true });
+      setRecipes(await categoryFilterFetch(id, pathname));
+    }
+  };
+
+  if (loading) {
+    return (
+      <h1>Loading...</h1>
+    );
+  }
 
   return (
     <div>
@@ -26,7 +59,13 @@ export default function Recipes() {
         {pathname === '/meals' ? 'Meals' : 'Drinks'}
       </h1>
       <Header />
-      {recipes.length > 1 && recipes
+      {category.length > 0 && category.map(({ strCategory }) => (<ButtonCategory
+        key={ strCategory }
+        name={ strCategory }
+        func={ categoryFilter }
+      />))}
+      <button data-testid="All-category-filter" onClick={ clearFilter }>All</button>
+      {recipes.length > 0 && recipes
         .map((e, index) => (
           <RecipeCard
             key={ (e.strMeal || e.strDrink
@@ -35,6 +74,8 @@ export default function Recipes() {
             ) }
             thumb={ (e.strMealThumb || e.strDrinkThumb) }
             index={ index }
+            id={ (e.idMeal || e.idDrink) }
+            path={ pathname }
           />))}
       <Footer />
     </div>
