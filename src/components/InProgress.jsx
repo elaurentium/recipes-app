@@ -41,6 +41,22 @@ export default function ReciInProgress() {
             <p data-testid="instructions">
               { recipesInfo.strInstructions }
             </p>
+            {
+              data && data.map((e, i) => (
+                <label
+                  key={ i }
+                  htmlFor="checkbox-input"
+                  data-testid={ `${index}-ingredient-step` }
+                >
+                  <input
+                    type="checkbox"
+                    id="checkbox-input"
+                    checked={ e.checked }
+                  />
+                  { `${item.measure} ${item.ingredient}` }
+                </label>
+              ))
+            }
           </div>
         )
       }
