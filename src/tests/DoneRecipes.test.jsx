@@ -3,8 +3,6 @@ import DoneRecipes from '../Pages/DoneRecipes';
 import { renderWithRouter } from '../helpers/renderWithRouter';
 import { doneRecipes } from './mockConstantes';
 
-localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
-
 describe('<DoneRecipes', () => {
   beforeEach(() => {
     localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));

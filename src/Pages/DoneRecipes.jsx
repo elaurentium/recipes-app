@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import copy from 'clipboard-copy';
 import DoneRecipesCard from '../components/DoneRecipesCard';
 import Header from '../components/Header';
+import { doneRecipes } from '../tests/mockConstantes';
+
+localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
 
 function DoneRecipes() {
   const [data, setaData] = useState([]);
+  const [shared, setShared] = useState('');
 
   useEffect(() => {
     if (localStorage.doneRecipes) {
@@ -11,8 +16,9 @@ function DoneRecipes() {
     }
   }, []);
 
-  const shareRecipe = () => {
-
+  const shareRecipe = (link, id) => {
+    copy(link);
+    setShared(id);
   };
 
   return (
@@ -36,6 +42,9 @@ function DoneRecipes() {
           img={ item.image }
           data={ item.doneDate }
           tag={ item.tags }
+          type={ item.type }
+          id={ item.id }
+          share={ shared }
         />))}
       </section>
     </>

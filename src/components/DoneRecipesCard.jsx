@@ -3,7 +3,10 @@ import P from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
 
 function DoneRecipesCard({
-  img, name, category, data, tag, func, index, nationality, alcohol }) {
+  img, name, category, data, tag, id,
+  func, index, nationality, alcohol, type, share }) {
+  const link = `http://localhost:3000/${type}s/${id}`;
+
   return (
     <div>
       <img src={ img } alt={ name } data-testid={ `${index}-horizontal-image` } />
@@ -32,7 +35,7 @@ function DoneRecipesCard({
         </span>))}
       <div>
         <button
-          onClick={ func }
+          onClick={ () => func(link, id) }
         >
           <img
             data-testid={ `${index}-horizontal-share-btn` }
@@ -40,6 +43,7 @@ function DoneRecipesCard({
             alt="share button"
           />
         </button>
+        {share === id && <p>Link copied!</p>}
       </div>
     </div>
   );
@@ -55,6 +59,8 @@ DoneRecipesCard.propTypes = {
   func: P.func,
   alcohol: P.string,
   nationality: P.string,
+  id: P.number,
+  type: P.string,
 }.isRequired;
 
 export default DoneRecipesCard;
