@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import copy from 'clipboard-copy';
 import DoneRecipesCard from '../components/DoneRecipesCard';
 import Header from '../components/Header';
-import { doneRecipes } from '../tests/mockConstantes';
+// import { doneRecipes } from '../tests/mockConstantes';
 
-localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+// localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
 
 function DoneRecipes() {
   const [data, setData] = useState([]);
