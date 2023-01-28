@@ -20,6 +20,19 @@ export const drinkFetch = async (ep) => {
   }
 };
 
+export const inProgressFetch = async (id, path) => {
+  const meal = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+  const drink = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+  const ep = path.includes('meals') ? meal : drink;
+
+  console.log(ep);
+
+  const response = await fetch(ep);
+  const json = await response.json();
+  const data = json.meals || json.drinks;
+  return data;
+};
+
 export const initalFetch = async (pathname) => {
   const DOZE = 12;
   const epMeal = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
