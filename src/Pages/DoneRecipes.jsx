@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DoneRecipesCard from '../components/DoneRecipesCard';
+import Header from '../components/Header';
 
 function DoneRecipes() {
   const [data, setaData] = useState([]);
@@ -17,6 +18,7 @@ function DoneRecipes() {
   return (
     <>
       <h1 data-testid="page-title">Done Recipes</h1>
+      <Header />
       <section>
         <button data-testid="filter-by-all-btn">ALL</button>
         <button data-testid="filter-by-meal-btn">Meals</button>
