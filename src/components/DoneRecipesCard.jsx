@@ -1,6 +1,8 @@
 import React from 'react';
 import P from 'prop-types';
+import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
+import '../style/DoneRecipesCard.css';
 
 function DoneRecipesCard({
   img, name, category, data, tag, id,
@@ -9,7 +11,15 @@ function DoneRecipesCard({
 
   return (
     <div>
-      <img src={ img } alt={ name } data-testid={ `${index}-horizontal-image` } />
+      <Link to={ `/${type}s/${id}` }>
+        <img
+          src={ img }
+          alt={ name }
+          data-testid={ `${index}-horizontal-image` }
+          className="thumb"
+        />
+        <p data-testid={ `${index}-horizontal-name` }>{ name }</p>
+      </Link>
       { nationality && (
         <p
           data-testid={ `${index}-horizontal-top-text` }
@@ -23,7 +33,6 @@ function DoneRecipesCard({
           { alcohol }
         </p>
       )}
-      <p data-testid={ `${index}-horizontal-name` }>{ name }</p>
       <p data-testid={ `${index}-horizontal-done-date` }>{ data }</p>
       {tag.length > 1 && tag.map((item, i) => (
         <span
