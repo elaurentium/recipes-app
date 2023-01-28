@@ -7,12 +7,12 @@ import { doneRecipes } from '../tests/mockConstantes';
 localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
 
 function DoneRecipes() {
-  const [data, setaData] = useState([]);
+  const [data, setData] = useState([]);
   const [shared, setShared] = useState('');
 
   useEffect(() => {
     if (localStorage.doneRecipes) {
-      setaData(JSON.parse(localStorage.getItem('doneRecipes')));
+      setData(JSON.parse(localStorage.getItem('doneRecipes')));
     }
   }, []);
 
@@ -21,14 +21,33 @@ function DoneRecipes() {
     setShared(id);
   };
 
+  const clearFilter = () => {
+    setData(JSON.parse(localStorage.getItem('doneRecipes')));
+  };
+
+  const setFilter = (type) => {
+    const filter = JSON.parse(localStorage.getItem('doneRecipes'));
+    setData(filter.filter((e) => e.type === type));
+  };
+
   return (
     <>
       <h1 data-testid="page-title">Done Recipes</h1>
       <Header />
       <section>
-        <button data-testid="filter-by-all-btn">ALL</button>
-        <button data-testid="filter-by-meal-btn">Meals</button>
-        <button data-testid="filter-by-drink-btn">Drinks</button>
+        <button data-testid="filter-by-all-btn" onClick={ clearFilter }>ALL</button>
+        <button
+          data-testid="filter-by-meal-btn"
+          onClick={ () => setFilter('meal') }
+        >
+          Meals
+        </button>
+        <button
+          data-testid="filter-by-drink-btn"
+          onClick={ () => setFilter('drink') }
+        >
+          Drinks
+        </button>
       </section>
       <section>
         { data.length > 0 && data.map((item, index) => (<DoneRecipesCard
