@@ -70,6 +70,7 @@ DoneRecipesCard.propTypes = {
   nationality: P.string,
   id: P.number,
   type: P.string,
+  share: P.number,
 }.isRequired;
 
 export default DoneRecipesCard;

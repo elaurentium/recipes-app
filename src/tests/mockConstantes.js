@@ -86,8 +86,11 @@ export const baseRecipeDrinks = {
 
 export const doneRecipeMeals = {
   index: 1,
+  id: '52771',
+  type: 'meal',
   nationality: 'brasilera',
   category: 'feijão',
+  share: '52771',
   alcohol: '',
   name: 'feijoada',
   img: 'http://www.img.com',
@@ -98,6 +101,9 @@ export const doneRecipeMeals = {
 
 export const doneRecipeDrinks = {
   index: 1,
+  id: '178319',
+  share: '',
+  type: 'drink',
   nationality: '',
   category: '',
   alcohol: 'Sim',
