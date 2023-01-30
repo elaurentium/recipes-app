@@ -7,7 +7,7 @@ export default function RecipeDetails() {
     apiDataMeals,
     fetchApiDrinks,
     apiDataDrinks } = useContext(RecipesDetailsContext);
-/*   // const {ssjshj} = useParams();
+  /*   // const {ssjshj} = useParams();
     const fetchApiDrinks = useCallback(() => {})
     const fetchApiMeals = useCallback(() => {}) */
 
