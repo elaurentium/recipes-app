@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import copy from 'clipboard-copy';
 import Header from '../components/Header';
 import FavoriteRecipesCard from '../components/FavoriteRecipesCard';
-import { favoriteRecipes } from '../tests/mockConstantes';
+// import { favoriteRecipes } from '../tests/mockConstantes';
 
-localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+// localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
 
 export default function FavoriteRecipes() {
   const [data, setData] = useState([]);
