@@ -5,7 +5,7 @@ export const fetch = {
 export const meals1 = {
   meals: [
     { idMeal: '52771',
-      strMeal: 'Spicy Arrabiata Penne',
+      strMeal: 'Spicy Arrabiata Penn',
       strDrinkAlternate: null,
       strCategory: 'Vegetarian',
       strArea: 'Italian' }],
@@ -93,8 +93,8 @@ export const doneRecipeMeals = {
   share: '52771',
   alcohol: '',
   name: 'feijoada',
-  img: 'http://www.img.com',
-  data: '28 - 01 - 2023 ',
+  img: 'http://www.imgs.com',
+  data: '28 - 02 - 2023 ',
   tag: ['feijão', 'caseira'],
   func: () => {},
 };
@@ -138,3 +138,52 @@ export const doneRecipes = [
     tags: [],
   },
 ];
+
+export const favoriteRecipes = [
+  {
+    id: '52771',
+    type: 'meal',
+    nationality: 'Italian',
+    category: 'Vegetarian',
+    alcoholicOrNot: '',
+    name: 'Spicy Arrabiata Penne',
+    image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+  },
+  {
+    id: '178319',
+    type: 'drink',
+    nationality: '',
+    category: 'Cocktail',
+    alcoholicOrNot: 'Alcoholic',
+    name: 'Aquamarine',
+    image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
+  },
+];
+
+export const favoriteRecipeMeals = {
+  index: 1,
+  id: '52771',
+  type: 'meal',
+  nationality: 'brasilera',
+  category: 'feijão',
+  share: '52771',
+  alcohol: '',
+  name: 'feijoada',
+  img: 'http://www.img.com',
+  func: () => {},
+  favoriteFunc: () => {},
+};
+
+export const favoriteRecipeDrinks = {
+  index: 1,
+  id: '178319',
+  share: '',
+  type: 'drink',
+  nationality: '',
+  category: '',
+  alcohol: 'Sim',
+  name: 'Caipirinha',
+  img: 'http://www.imgs.com',
+  func: () => {},
+  favoriteFunc: () => {},
+};
