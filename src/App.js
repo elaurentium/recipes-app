@@ -14,12 +14,17 @@ function App() {
       <Route exact path="/" component={ Login } />
       <Route exact path="/meals" component={ Recipes } />
       <Route exact path="/drinks" component={ Recipes } />
+<<<<<<< HEAD
       <Route exact path="/meals/:id">
         <RecipeDetails />
       </Route>
       <Route exact path="/drinks/:id">
         <RecipeDetails />
       </Route>
+=======
+      <Route exact path="/meals/:id" component={ RecipeDetails } />
+      <Route exact path="/drinks/:id" component={ RecipeDetails } />
+>>>>>>> main-group-5
       <Route
         exact
         path="/meals/:id/in-progress"

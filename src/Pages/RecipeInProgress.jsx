@@ -1,9 +1,13 @@
 import React from 'react';
+import Header from '../components/Header';
 
-function RecipeInProgress() {
+export default function RecipeInProgress() {
   return (
-    <div>RecipeInProgress</div>
+    <div>
+      <h1 data-testid="page-title">
+        Recipes in Progress
+      </h1>
+      <Header />
+    </div>
   );
 }
-
-export default RecipeInProgress;
