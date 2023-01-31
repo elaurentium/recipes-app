@@ -88,7 +88,6 @@ export default function RecipeDetails() {
               />
             )
         }
-
         {
           pathname.includes('/meals')
             ? (
@@ -101,7 +100,6 @@ export default function RecipeDetails() {
               </h1>
             )
         }
-
         {
           pathname.includes('/meals')
             ? (
@@ -140,16 +138,18 @@ export default function RecipeDetails() {
               ) : (
                 array.map((_, index) => {
                   if (
-                    apiDataDrinks[`strIngredient${index + 1}`] !== null
-                    && apiDataDrinks[`strIngredient${index + 1}`] !== ''
+                    apiDataDrinks[0][`strIngredient${index + 1}`] !== null
+                    && apiDataDrinks[0][`strIngredient${index + 1}`]
                   ) {
+                    console.log(apiDataDrinks);
+                    const measure = apiDataDrinks[0][`strMeasure${index + 1}`] || '';
                     return (
                       <li
                         key={ index }
                         data-testid={ `${index}-ingredient-name-and-measure` }
                       >
                         {`${apiDataDrinks[0][`strIngredient${index + 1}`]} 
-                        ${apiDataDrinks[0][`strMeasure${index + 1}`]}`}
+                        ${measure}`}
                       </li>
                     );
                   }

@@ -22,10 +22,7 @@ describe('Testa componente Header', () => {
     expect(searchInputTxt).not.toBeInTheDocument();
   });
   it('botão profile leva para rota /profile', async () => {
-    const { history } = renderWithRouter(
-      <ApiContext><Header /></ApiContext>,
-      '/meals',
-    );
+    const { history } = renderWithRouter(<ApiContext><Header /></ApiContext>, '/meals');
 
     const profilePic = screen.getByTestId(profile);
     userEvent.click(profilePic);
@@ -36,10 +33,7 @@ describe('Testa componente Header', () => {
     });
   });
   it('botão de busca mostra input', () => {
-    renderWithRouter(
-      <ApiContext><Header /></ApiContext>,
-      '/meals',
-    );
+    renderWithRouter(<ApiContext><Header /></ApiContext>, '/meals');
 
     const searchInputButton = screen.getByTestId(searchBtn);
     userEvent.click(searchInputButton);

@@ -3,8 +3,45 @@ import userEvent from '@testing-library/user-event';
 import ApiContext from '../Context/ApiContext';
 import Recipes from '../Pages/Recipes';
 import { renderWithRouter } from '../helpers/renderWithRouter';
+import ordinaryDrinks from '../../cypress/mocks/ordinaryDrinks';
+import beefMeals from '../../cypress/mocks/beefMeals';
+import { categoryDrinks, categoryMeals } from './mockConstantes';
+import { meals } from './mock/meals';
+import drinks from './mock/drinks';
+
+const initMealsEP = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+const initDrinksksEP = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+const mealsCategoryEP = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+const drinksCategoryEP = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+const beefEP = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Beef';
+const ordinaryEP = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary Drink';
+
+const endPoint = {
+  [initMealsEP]: meals,
+  [initDrinksksEP]: drinks,
+  [mealsCategoryEP]: categoryMeals,
+  [drinksCategoryEP]: categoryDrinks,
+  [beefEP]: beefMeals,
+  [ordinaryEP]: ordinaryDrinks,
+};
 
 describe('<Recipes/>', () => {
+  beforeEach(() => {
+    jest.spyOn(global, 'fetch')
+      .mockImplementation((param) => ({
+        json: async () => {
+          const response = endPoint[param];
+          if (!response) {
+            throw new Error(`Mock not found for URL: "${param}"`);
+          }
+          return response;
+        },
+      }));
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
   it('componentes são renderizados em /meals', async () => {
     renderWithRouter(<ApiContext><Recipes /></ApiContext>, '/meals');
 
@@ -81,7 +118,6 @@ describe('<Recipes/>', () => {
   });
   it('receitas são renderizadas em /meals com filtro', async () => {
     const { history } = renderWithRouter(<ApiContext><Recipes /></ApiContext>, '/meals');
-
     await waitFor(() => {
       const btn = screen.getByRole('button', { name: /beef/i });
       expect(btn).toBeInTheDocument();
