@@ -187,6 +187,12 @@ export default function RecipeDetails() {
             )
         }
       </div>
+      <button
+        className="start-recipe"
+        data-testid="start-recipe-btn"
+      >
+        Start Recipe
+      </button>
     </div>
   );
 }
