@@ -34,21 +34,21 @@ describe('Testes do componente Profile', () => {
     });
     expect(logoutButton).not.toBeDisabled();
   });
-  it('Testa se ao clicar no botão, a página é direcionada para a rota correta: "/", .', () => {
+  it('se ao clicar no botão, direciona para a rota correta: "/", .', () => {
     const { history } = renderWithRouter(<Profile />);
 
     const logoutButton = screen.getByTestId('profile-logout-btn');
     userEvent.click(logoutButton);
     expect(history.location.pathname).toBe('/');
   });
-  it('Testa se ao clicar no botão, a página é direcionada para a rota correta: "/done-recipes".', () => {
+  it('se ao clicar no botão, direciona para a rota correta: "/done-recipes".', () => {
     const { history } = renderWithRouter(<Profile />);
 
     const doneRecipes = screen.getByTestId('profile-done-btn');
     userEvent.click(doneRecipes);
     expect(history.location.pathname).toBe('/done-recipes');
   });
-  it('Testa se ao clicar no botão, a página é direcionada para a rota correta: "/favorite-recipes".', () => {
+  it('se ao clicar no botão, direciona para a rota correta: "/favorite-recipes".', () => {
     const { history } = renderWithRouter(<Profile />);
 
     const favoritesRecipes = screen.getByTestId('profile-favorite-btn');

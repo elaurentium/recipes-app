@@ -72,3 +72,6 @@ export const fetchApiDrinks = async (idDrinks) => {
     return null;
   }
 };
+
+export const DRINK_EDPOINT = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+export const MEAL_EDPOINT = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';

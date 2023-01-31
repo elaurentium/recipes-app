@@ -81,6 +81,7 @@ describe('<Recipes/>', () => {
   });
   it('receitas são renderizadas em /meals com filtro', async () => {
     const { history } = renderWithRouter(<ApiContext><Recipes /></ApiContext>, '/meals');
+
     await waitFor(() => {
       const btn = screen.getByRole('button', { name: /beef/i });
       expect(btn).toBeInTheDocument();
