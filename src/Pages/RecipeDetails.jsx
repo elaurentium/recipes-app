@@ -2,20 +2,20 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import '../App.css';
 import {
-  // drinkFetch,
-  // DRINK_EDPOINT,
+  drinkFetch,
+  DRINK_EDPOINT,
   fetchApiDrinks,
   fetchApiMeals,
-  // mealFetch,
-  // MEAL_EDPOINT,
+  mealFetch,
+  MEAL_EDPOINT,
 } from '../services';
 
 export default function RecipeDetails() {
   const [apiDataMeals, setApiDataMeals] = useState([]);
   const [apiDataDrinks, setApiDataDrinks] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const [dataDrinks, setDataDrinks] = useState([]);
-  // const [dataMeals, setDataMeals] = useState([]);
+  const [dataDrinks, setDataDrinks] = useState([]);
+  const [dataMeals, setDataMeals] = useState([]);
 
   const history = useHistory();
   const { id } = useParams();
@@ -36,34 +36,34 @@ export default function RecipeDetails() {
     }
   }, [id, pathname]);
 
-  // const apiMeal = useCallback(async () => {
-  //   if (pathname.includes(`/meals${id}`)) {
-  //     const response = await mealFetch(MEAL_EDPOINT);
-  //     setDataMeals(response);
-  //     setLoading(false);
-  //   }
-  // }, [id, pathname]);
+  const apiMeal = useCallback(async () => {
+    if (pathname.includes('/meals')) {
+      const response = await drinkFetch(DRINK_EDPOINT);
+      setDataMeals(response);
+      setLoading(false);
+    }
+  }, [pathname]);
 
-  // const apiDrink = useCallback(async () => {
-  //   if (pathname.includes(`/drinks${id}`)) {
-  //     const response = await drinkFetch(DRINK_EDPOINT);
-  //     setDataDrinks(response);
-  //     setLoading(false);
-  //   }
-  // }, [id, pathname]);
+  const apiDrink = useCallback(async () => {
+    if (pathname.includes('/drinks')) {
+      const response = await mealFetch(MEAL_EDPOINT);
+      setDataDrinks(response);
+      setLoading(false);
+    }
+  }, [pathname]);
 
   useEffect(() => {
     fetchDrinkMeal(id);
-    // apiMeal();
-    // apiDrink();
-  }, [fetchDrinkMeal, id]);
+    apiMeal();
+    apiDrink();
+  }, [apiDrink, apiMeal, fetchDrinkMeal, id]);
 
   if (loading) {
     return (
       <h1>Loading...</h1>
     );
   }
-  // console.log(pathname.includes('/meals') ? dataMeals : dataDrinks);
+  console.log(pathname.includes('/meals') ? dataMeals : dataDrinks);
 
   return (
     <div>
