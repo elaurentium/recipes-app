@@ -3,6 +3,7 @@ import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from '../helpers/renderWithRouter';
 import Header from '../components/Header';
+import ApiContext from '../Context/ApiContext';
 
 const profile = 'profile-top-btn';
 const searchBtn = 'search-top-btn';
@@ -21,7 +22,7 @@ describe('Testa componente Header', () => {
     expect(searchInputTxt).not.toBeInTheDocument();
   });
   it('botão profile leva para rota /profile', async () => {
-    const { history } = renderWithRouter(<Header />, '/meals');
+    const { history } = renderWithRouter(<ApiContext><Header /></ApiContext>, '/meals');
 
     const profilePic = screen.getByTestId(profile);
     userEvent.click(profilePic);
@@ -32,7 +33,7 @@ describe('Testa componente Header', () => {
     });
   });
   it('botão de busca mostra input', () => {
-    renderWithRouter(<Header />, '/meals');
+    renderWithRouter(<ApiContext><Header /></ApiContext>, '/meals');
 
     const searchInputButton = screen.getByTestId(searchBtn);
     userEvent.click(searchInputButton);
