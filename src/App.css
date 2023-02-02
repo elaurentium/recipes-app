@@ -66,3 +66,14 @@
     transform: rotate(-10deg);
   }
 }
+
+li {
+  list-style-type: none;
+}
+
+.start-recipe {
+  bottom: 0;
+  position: fixed;
+  text-align: center;
+  width: 90%;
+}

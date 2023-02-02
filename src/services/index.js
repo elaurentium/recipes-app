@@ -25,12 +25,10 @@ export const inProgressFetch = async (id, path) => {
   const drink = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
   const ep = path.includes('meals') ? meal : drink;
 
-  console.log(ep);
-
   const response = await fetch(ep);
   const json = await response.json();
   const data = json.meals || json.drinks;
-  return data;
+  return data[0];
 };
 
 export const initalFetch = async (pathname) => {
@@ -65,3 +63,26 @@ export const categoryFilterFetch = async (id, pathname) => {
   const array = json.meals || json.drinks;
   return array.slice(0, DOZE);
 };
+
+export const fetchApiMeals = async (idMeals) => {
+  try {
+    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeals}`);
+    const data = await response.json();
+    return data.meals;
+  } catch {
+    return null;
+  }
+};
+
+export const fetchApiDrinks = async (idDrinks) => {
+  try {
+    const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrinks}`);
+    const data = await response.json();
+    return data.drinks;
+  } catch {
+    return null;
+  }
+};
+
+export const DRINK_EDPOINT = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+export const MEAL_EDPOINT = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
