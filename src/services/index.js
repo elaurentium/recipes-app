@@ -86,3 +86,28 @@ export const fetchApiDrinks = async (idDrinks) => {
 
 export const DRINK_EDPOINT = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
 export const MEAL_EDPOINT = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+
+export const goToRecipes = (data, history, pathname) => {
+  const date = new Date();
+  const doneDate = date.toISOString();
+  const obj = {
+    id: data.idMeal || data.idDrink,
+    type: pathname.includes('meals') ? 'meal' : 'drink',
+    nationality: data.strArea || '',
+    category: data.strCategory || '',
+    alcoholicOrNot: data.strAlcoholic || '',
+    name: data.strDrink || data.strMeal,
+    image: data.strDrinkThumb || data.strMealThumb,
+    doneDate,
+    tags: data.strTags ? data.strTags.split(',') : [],
+  };
+
+  if (localStorage.doneRecipes) {
+    let fav = JSON.parse(localStorage.getItem('doneRecipes'));
+    fav = [...fav, obj];
+    localStorage.setItem('doneRecipes', JSON.stringify(fav));
+  } else {
+    localStorage.setItem('doneRecipes', JSON.stringify([obj]));
+  }
+  history.push('/done-recipes');
+};

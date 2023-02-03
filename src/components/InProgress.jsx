@@ -1,9 +1,9 @@
 import clipboardCopy from 'clipboard-copy';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import { inProgressFetch } from '../services/index';
+import { inProgressFetch, goToRecipes } from '../services/index';
 
 export default function ReciInProgress() {
   const [loading, setLoading] = useState(true);
@@ -11,12 +11,14 @@ export default function ReciInProgress() {
   const [data, setData] = useState({});
   const [check, setCheck] = useState(false);
   const [favorite, setFavorite] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const [params, setParams] = useState('');
   const [shared, setShared] = useState('');
   const numero15 = 15;
   const newArray = Array(numero15).fill('');
 
   const { id } = useParams();
+  const history = useHistory();
 
   const link = pathname.includes('meals') ? `/meals/${id}` : `/drinks/${id}`;
 
@@ -107,9 +109,30 @@ export default function ReciInProgress() {
     }
   }, [favorite, params]);
 
+  const handleFinishButton = useCallback(() => {
+    const ingredient = newArray.map((_, i) => {
+      if (data[`strIngredient${i + 1}`] !== null
+            && data[`strIngredient${i + 1}`] !== '') {
+        return data[`strIngredient${i + 1}`];
+      }
+      return false;
+    }).filter((e) => e !== false);
+    const checkbox = Object.keys(check);
+    if (ingredient.length > checkbox.length) {
+      setDisabled(true);
+    } else {
+      let verify = true;
+      checkbox.forEach((e) => {
+        verify = verify && check[e];
+      });
+      setDisabled(!verify);
+    }
+  }, [check, data, newArray]);
+
   useEffect(() => {
     handleLocalStore();
-  }, [handleLocalStore, loading, check]);
+    handleFinishButton();
+  }, [handleLocalStore, loading, check, handleFinishButton]);
 
   useEffect(() => {
     if (favorite) {
@@ -197,7 +220,13 @@ export default function ReciInProgress() {
           data-testid="favorite-btn"
         />
       </button>
-      <button data-testid="finish-recipe-btn">Finish Recipe</button>
+      <button
+        data-testid="finish-recipe-btn"
+        disabled={ disabled }
+        onClick={ () => goToRecipes(data, history, pathname) }
+      >
+        Finish Recipe
+      </button>
       {shared === id && <p>Link copied!</p>}
     </div>
   );
