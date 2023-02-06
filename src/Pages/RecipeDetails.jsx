@@ -187,6 +187,8 @@ export default function RecipeDetails() {
             )
         }
       </div>
+      <button data-testid="share-btn">Share</button>
+      <button data-testid="favorite-btn">Favorite</button>
       <button
         className="start-recipe"
         data-testid="start-recipe-btn"
