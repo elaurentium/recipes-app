@@ -10,6 +10,8 @@ function SearchBar() {
 
   const { data, result, ApiFetch } = useContext(ContextApi);
 
+  console.log(data);
+
   useEffect(() => {
     if (data.length === 1) {
       const id = data[0].idMeal || data[0].idDrink;

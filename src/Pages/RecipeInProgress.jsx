@@ -1,13 +1,10 @@
 import React from 'react';
-import Header from '../components/Header';
+import InProgress from '../components/InProgress';
 
 export default function RecipeInProgress() {
   return (
     <div>
-      <h1 data-testid="page-title">
-        Recipes in Progress
-      </h1>
-      <Header />
+      <InProgress />
     </div>
   );
 }
